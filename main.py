@@ -3,7 +3,7 @@ from typing import List
 import pandas as pd
 
 app = FastAPI()
-cutoff_df = pd.read_csv("https://drive.google.com/file/d/1DF8pbSjEQRclsr0d4tjZN3wiv9QRABl1/view?usp=sharing")
+cutoff_df = pd.read_csv("https://drive.google.com/uc?export=download&id=1DF8pbSjEQRclsr0d4tjZN3wiv9QRABl1")
 
 @app.get("/preference-list")
 def preference_list(place: str, percentile: float, branches: List[str] = Query(...)):
