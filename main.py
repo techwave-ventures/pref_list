@@ -13,8 +13,8 @@ def preference_list(place: str, percentile: float, branches: List[str] = Query(.
     df['Cutoff'] = pd.to_numeric(df['Cutoff'], errors='coerce')
 
     filtered = df[
-        (df['Place'].str.strip().str.lower() == place.strip().lower()) &
-        (df['Branch'].isin(branches)) &
+        (df['Place'].str.strip().str.lower() == place.strip().lower()) & 
+        (df['Branch'].isin(branches)) & 
         (df['Cutoff'].between(percentile - 10, percentile + 10))
     ]
 
@@ -23,3 +23,9 @@ def preference_list(place: str, percentile: float, branches: List[str] = Query(.
     filtered = filtered.drop(columns='MatchScore')
 
     return filtered.to_dict(orient='records')
+
+@app.get("/all")
+def all_entries():
+    df = cutoff_df.copy()
+    df['Cutoff'] = pd.to_numeric(df['Cutoff'], errors='coerce')
+    return df.to_dict(orient='records')
