@@ -42,8 +42,8 @@ def get_preference_list(
     range_val = CATEGORY_RANGES.get(category.upper(), 15)
 
     filtered = df[
-        (df['Place_clean'].isin([p.lower() for p in places])) &
-        (df['Branch'].isin(branches)) &
+        (df['Place_clean'].isin([p.lower() for p in places])) & 
+        (df['Branch'].isin(branches)) & 
         (df['Cutoff'].between(percentile - range_val, percentile + range_val))
     ]
 
@@ -51,7 +51,8 @@ def get_preference_list(
     filtered = filtered.sort_values(by=['Cutoff', 'MatchScore'], ascending=[False, True])
     filtered = filtered.drop(columns=['MatchScore', 'Place_clean'])
 
-    selected_cols = ['College Code', 'College Name', 'Choice Code', 'Branch', 'Cutoff']
+    # Include 'Place' column in the response
+    selected_cols = ['College Code', 'College Name', 'Choice Code', 'Branch', 'Place', 'Cutoff']
     if all(col in filtered.columns for col in selected_cols):
         filtered = filtered[selected_cols]
 
